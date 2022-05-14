@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QLabel, QWidget, QApplication,QVBoxLayout,QHBoxLayout,QPushButton,QLineEdit
-from PyQt5.QtCore import Qt, QTime, QTimer 
+from PyQt5.QtCore import Qt, QTime, QTimer, QLocale
+from PyQt5.QtGui import QIntValidator
 
 
 class Experiment():
@@ -118,19 +119,30 @@ class TestWin(QWidget):                                           #Второй 
         self.move(250,250)
 
     def unitUI(self):                                             #Виджеты 2
+        loc = QLocale(QLocale.English, QLocale.UnitedStates)        #валидатор
+        validator = QIntValidator()
+        validator.setLocale(loc)
         label_fio = QLabel('Введите ФИО:')
         fio = QLineEdit()
         label_age = QLabel('Введите ваш возраст:')
         self.age = QLineEdit('0')
-        instr1 = QLabel('ИНСТРУКЦИЯ 1')
-        self.test1 = QPushButton('1 тест')
+        self.age.setValidator(validator)
+        self.age.setValidator(QIntValidator(0,11))
+        instr1 = QLabel('Лягте на спину и замерьте пульс за 15 секунд. Нажмите кнопку "Начать первый тест", чтобы запустить таймер.\nРезультат запишите в соответствующее поле.')
+        self.test1 = QPushButton('Начать первый тест')
         self.p1 = QLineEdit('0')
-        instr2 = QLabel('ИНСТРУКЦИЯ 2')
-        self.test2 = QPushButton('2 тест')
-        instr3 = QLabel('ИНСТРУКЦИЯ 2')
+        self.p1.setValidator(validator)
+        self.p1.setValidator(QIntValidator(0,111))
+        instr2 = QLabel('Выполните 30 приседаний за 45 секунд. Для этого наммите кнопку "Начать делать приседания",\nчтобы запустить счётчик приседаний.')
+        self.test2 = QPushButton('Начать делать приседания')
+        instr3 = QLabel('Лягте на спину и замерьте пульс сначала за первые 15 секунд минуты, затем за последние 15 секунд.\nНажмите кнопку "Начать финальный тест", чтобы запустить таймер.\nЗелёным обозначены секунды, в течение которых необходимо\nпроводить измерения, чёрным - минуты без замера пульсаций. Результаты запишите в соответствующие поля.')
         self.test3 = QPushButton('3 тест')
         self.p2 = QLineEdit('0')
+        self.p2.setValidator(validator)
+        self.p2.setValidator(QIntValidator(0,111))
         self.p3 = QLineEdit('0')
+        self.p3.setValidator(validator)
+        self.p3.setValidator(QIntValidator(0,111))
         self.button = QPushButton('Завершить')
         self.label_timer = QLabel('00:00:00')
         main_line = QHBoxLayout()
